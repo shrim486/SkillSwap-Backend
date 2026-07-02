@@ -1,26 +1,37 @@
 const Project = require("../models/Project");
 
+
+// CREATE PROJECT
 const createProject = async (req, res) => {
 
     try {
 
         const {
-            title,
-            description,
-            techStack,
-            githubLink
-        } = req.body;
-
-        const project = await Project.create({
 
             title,
             description,
             techStack,
             githubLink,
+            liveLink,
+            projectImage
 
-            createdBy: req.user
+        } = req.body;
 
-        });
+
+        const project =
+            await Project.create({
+
+                title,
+                description,
+                techStack,
+                githubLink,
+                liveLink,
+                projectImage,
+
+                createdBy: req.user
+
+            });
+
 
         res.status(201).json(project);
 
@@ -29,7 +40,9 @@ const createProject = async (req, res) => {
     catch (error) {
 
         res.status(500).json({
+
             message: error.message
+
         });
 
     }
@@ -37,17 +50,17 @@ const createProject = async (req, res) => {
 };
 
 
+// GET MY PROJECTS
 const getMyProjects = async (req, res) => {
 
     try {
 
-        console.log("USER ID:", req.user);
+        const projects =
+            await Project.find({
 
-        const projects = await Project.find({
-            createdBy: req.user
-        });
+                createdBy: req.user
 
-        console.log("PROJECTS FOUND:", projects);
+            });
 
         res.json(projects);
 
@@ -56,24 +69,27 @@ const getMyProjects = async (req, res) => {
     catch (error) {
 
         res.status(500).json({
+
             message: error.message
+
         });
 
     }
 
 };
 
+
+// GET PROJECTS BY USER
 const getProjectsByUser = async (req, res) => {
 
     try {
 
-        console.log("PARAM ID:", req.params.id);
+        const projects =
+            await Project.find({
 
-        const projects = await Project.find({
-            createdBy: req.params.id
-        });
+                createdBy: req.params.id
 
-        console.log("FOUND PROJECTS:", projects);
+            });
 
         res.json(projects);
 
@@ -82,14 +98,20 @@ const getProjectsByUser = async (req, res) => {
     catch (error) {
 
         res.status(500).json({
+
             message: error.message
+
         });
 
     }
 
 };
+
+
 module.exports = {
+
     createProject,
     getMyProjects,
     getProjectsByUser
+
 };

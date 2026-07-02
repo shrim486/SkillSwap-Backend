@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 
-
 const userSchema = new mongoose.Schema({
 
     name: {
@@ -17,6 +16,16 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true
+    },
+
+    profileImage: {
+        type: String,
+        default: ""
+    },
+
+    bio: {
+        type: String,
+        default: ""
     },
 
     college: {
@@ -39,6 +48,11 @@ const userSchema = new mongoose.Schema({
         default: ""
     },
 
+    linkedinUsername: {
+        type: String,
+        default: ""
+    },
+
     skills: {
         type: [String],
         default: []
@@ -53,4 +67,7 @@ const userSchema = new mongoose.Schema({
     timestamps: true
 });
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model(
+    "User",
+    userSchema
+);

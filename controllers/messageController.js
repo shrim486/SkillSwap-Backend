@@ -1,5 +1,6 @@
 const Message = require("../models/Message");
 
+
 const sendMessage = async (req, res) => {
 
     try {
@@ -36,6 +37,43 @@ const getMessages = async (req, res) => {
         const myId = req.user;
         const otherUser = req.params.id;
 
+console.log("MY ID:", myId);
+console.log("OTHER USER:", otherUser);
+
+const result = await Message.updateMany(
+
+    {
+        sender: otherUser,
+        receiver: myId,
+        seen: false
+    },
+
+    {
+        seen: true
+    }
+
+);
+
+console.log("UPDATED:", result);
+        await Message.updateMany(
+
+            {
+
+                sender: otherUser,
+                receiver: myId,
+                seen: false
+
+            },
+
+            {
+
+                seen: true
+
+            }
+
+        );
+
+
         const messages = await Message.find({
 
             $or: [
@@ -53,7 +91,9 @@ const getMessages = async (req, res) => {
             ]
 
         }).sort({
+
             createdAt: 1
+
         });
 
         res.json(messages);
@@ -70,7 +110,10 @@ const getMessages = async (req, res) => {
 
 };
 
+
 module.exports = {
+
     sendMessage,
     getMessages
+
 };
