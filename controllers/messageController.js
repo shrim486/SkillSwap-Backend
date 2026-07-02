@@ -44,16 +44,16 @@ const result = await Message.updateMany(
 
     {
         sender: otherUser,
-        receiver: myId,
-        seen: false
+        receiver: myId
     },
 
     {
-        seen: true
+        $set: {
+            seen: true
+        }
     }
 
 );
-
 console.log("UPDATED:", result);
         await Message.updateMany(
 
