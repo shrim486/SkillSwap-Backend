@@ -13,7 +13,8 @@ const messageRoutes = require("./routes/messageRoutes");
 const projectRoutes = require("./routes/projectRoutes");
 const collaborationRoutes =
     require("./routes/collaborationRoutes");
-
+const aiRoutes =
+    require("./routes/aiRoutes");
 dotenv.config();
 
 connectDB();
@@ -29,7 +30,7 @@ app.use("/api/sessions", sessionRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/projects", projectRoutes);
 app.use("/api/collaborations", collaborationRoutes);
-
+app.use("/api/ai", aiRoutes);
 app.get("/", (req, res) => {
 
     res.send(
