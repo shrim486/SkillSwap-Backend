@@ -1,6 +1,5 @@
 const Message = require("../models/Message");
 
-
 const sendMessage = async (req, res) => {
 
     try {
@@ -37,42 +36,25 @@ const getMessages = async (req, res) => {
         const myId = req.user;
         const otherUser = req.params.id;
 
-console.log("MY ID:", myId);
-console.log("OTHER USER:", otherUser);
+        console.log("MY ID:", myId);
+        console.log("OTHER USER:", otherUser);
 
-const result = await Message.updateMany(
-
-    {
-        sender: otherUser,
-        receiver: myId
-    },
-
-    {
-        $set: {
-            seen: true
-        }
-    }
-
-);
-console.log("UPDATED:", result);
-        await Message.updateMany(
+        const result = await Message.updateMany(
 
             {
-
                 sender: otherUser,
-                receiver: myId,
-                seen: false
-
+                receiver: myId
             },
 
             {
-
-                seen: true
-
+                $set: {
+                    seen: true
+                }
             }
 
         );
 
+        console.log("UPDATED:", result);
 
         const messages = await Message.find({
 
@@ -101,6 +83,8 @@ console.log("UPDATED:", result);
     }
 
     catch (error) {
+
+        console.error(error);
 
         res.status(500).json({
             message: error.message
